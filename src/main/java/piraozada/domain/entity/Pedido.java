@@ -8,8 +8,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
-@Entity
 @Table(name = "pedidos")
+@Entity
 public class Pedido {
 
     @Id
