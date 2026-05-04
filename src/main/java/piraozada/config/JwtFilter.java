@@ -29,6 +29,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
         String authHeader = request.getHeader("Authorization");
 
+        System.out.println(">>> Authorization header: " + authHeader);
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
@@ -36,11 +37,13 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         String token = authHeader.substring(7);
+        boolean valido = jwtService.tokenValido(token);
+        System.out.println(">>> Token valido: " + valido);
 
-        if (jwtService.tokenValido(token)) {
+        if (valido) {
             String username = jwtService.extrairUsername(token);
             String role = jwtService.extrairRole(token);
-
+            System.out.println(">>> Username: " + username + " | Role: " + role);
 
             UsernamePasswordAuthenticationToken auth =
                     new UsernamePasswordAuthenticationToken(
